@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Incident</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="container small-container">
+
+    <a href="/" class="back-link">
+        ← Dashboard
+    </a>
+
+    <section class="form-panel">
+
+        <h1>Create Security Incident</h1>
+
+        <p class="subtitle">
+            Register a new incident for investigation.
+        </p>
+
+        <form method="POST" action="/new">
+
+            <label>Incident title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Multiple failed SSH login attempts"
+                required
+            >
+
+
+            <label>Category</label>
+
+            <select name="category" required>
+                <option value="Authentication">Authentication</option>
+                <option value="Phishing">Phishing</option>
+                <option value="Malware">Malware</option>
+                <option value="Network">Network</option>
+                <option value="Data Exfiltration">Data Exfiltration</option>
+                <option value="Privilege Escalation">Privilege Escalation</option>
+                <option value="Suspicious Activity">Suspicious Activity</option>
+                <option value="Other">Other</option>
+            </select>
+
+
+            <label>Severity</label>
+
+            <select name="severity" required>
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+            </select>
+
+
+            <label>Alert source</label>
+
+            <input
+                type="text"
+                name="source"
+                placeholder="Microsoft Sentinel"
+            >
+
+
+            <label>Assigned analyst</label>
+
+            <input
+                type="text"
+                name="assigned_to"
+                placeholder="SOC Analyst"
+            >
+
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                rows="8"
+                placeholder="Describe the incident..."
+            ></textarea>
+
+
+            <button type="submit" class="button submit-button">
+                Create Incident
+            </button>
+
+        </form>
+
+    </section>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Incident #{{ incident.id }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container small-container">
+
+    <a
+        href="{{ url_for('index') }}"
+        class="back-link"
+    >
+        ← Incident Queue
+    </a>
+
+
+    <section class="incident-panel">
+
+        <div class="incident-heading">
+
+            <div>
+
+                <p class="incident-number">
+                    INCIDENT #{{ incident.id }}
+                </p>
+
+                <h1>
+                    {{ incident.title }}
+                </h1>
+
+            </div>
+
+
+            <span
+                class="severity severity-{{ incident.severity|lower }}"
+            >
+                {{ incident.severity }}
+            </span>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail">
+
+                <span>Category</span>
+
+                <strong>
+                    {{ incident.category }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Status</span>
+
+                <strong>
+                    {{ incident.status }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Alert Source</span>
+
+                <strong>
+                    {{ incident.source or "Not specified" }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Assigned Analyst</span>
+
+                <strong>
+                    {{ incident.assigned_to or "Unassigned" }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Created</span>
+
+                <strong>
+                    {{ incident.created_at }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Last Updated</span>
+
+                <strong>
+                    {{ incident.updated_at }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="description">
+
+            <h2>Investigation Notes</h2>
+
+            <p>
+                {{ incident.description or "No description provided." }}
+            </p>
+
+        </div>
+
+
+        <div class="actions">
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'update_status',
+                    incident_id=incident.id
+                ) }}"
+            >
+
+                <label>
+                    Update Status
+                </label>
+
+                <select name="status">
+
+                    <option
+                        {% if incident.status == "New" %}
+                        selected
+                        {% endif %}
+                    >
+                        New
+                    </option>
+
+                    <option
+                        {% if incident.status == "Investigating" %}
+                        selected
+                        {% endif %}
+                    >
+                        Investigating
+                    </option>
+
+                    <option
+                        {% if incident.status == "Contained" %}
+                        selected
+                        {% endif %}
+                    >
+                        Contained
+                    </option>
+
+                    <option
+                        {% if incident.status == "Closed" %}
+                        selected
+                        {% endif %}
+                    >
+                        Closed
+                    </option>
+
+                </select>
+
+                <button
+                    type="submit"
+                    class="button"
+                >
+                    Update
+                </button>
+
+            </form>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'delete_incident',
+                    incident_id=incident.id
+                ) }}"
+                onsubmit="return confirm('Delete this incident?');"
+            >
+
+                <button
+                    type="submit"
+                    class="delete-button"
+                >
+                    Delete Incident
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+
+</html>

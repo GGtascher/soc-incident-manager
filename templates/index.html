@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SOC Incident Manager</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div>
+            <h1>SOC Incident Manager</h1>
+            <p class="subtitle">
+                Security Incident Tracking Dashboard
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('new_incident') }}"
+            class="button"
+        >
+            + New Incident
+        </a>
+    </header>
+
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <span>Total Incidents</span>
+            <strong>{{ stats.total }}</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Open</span>
+            <strong>{{ stats.open }}</strong>
+        </div>
+
+        <div class="stat-card critical-card">
+            <span>Critical</span>
+            <strong>{{ stats.critical }}</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Closed</span>
+            <strong>{{ stats.closed }}</strong>
+        </div>
+
+    </section>
+
+
+    <section class="panel">
+
+        <div class="panel-header">
+
+            <h2>Incident Queue</h2>
+
+            <span>
+                {{ incidents|length }} incidents
+            </span>
+
+        </div>
+
+
+        {% if incidents %}
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Incident</th>
+                <th>Category</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for incident in incidents %}
+
+            <tr>
+
+                <td>
+                    #{{ incident.id }}
+                </td>
+
+                <td>
+
+                    <a
+                        href="{{ url_for(
+                            'incident',
+                            incident_id=incident.id
+                        ) }}"
+                        class="incident-link"
+                    >
+                        {{ incident.title }}
+                    </a>
+
+                </td>
+
+                <td>
+                    {{ incident.category }}
+                </td>
+
+                <td>
+
+                    <span
+                        class="severity severity-{{ incident.severity|lower }}"
+                    >
+                        {{ incident.severity }}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <span class="status">
+                        {{ incident.status }}
+                    </span>
+
+                </td>
+
+                <td>
+                    {{ incident.created_at }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No incidents yet</h3>
+
+            <p>
+                Create the first security incident
+                to start the investigation queue.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+</body>
+
+</html>
