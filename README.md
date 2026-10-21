@@ -42,7 +42,7 @@ Closed
 
 Clone the repository:
 
-git clone [https://github.com/GGtascher/soc-incident-manager.git](https://github.com/GGtascher/soc-incident-manager.git)
+git clone [https://github.com/dmytrooliinyk-cyber/soc-incident-manager.git](https://github.com/dmytrooliinyk-cyber/soc-incident-manager.git)
 
 cd soc-incident-manager
 
